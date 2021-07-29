@@ -26,7 +26,7 @@ const Header = (props) => {
     <>
       <CssBaseline />
       <HideOnScroll {...props}>
-        <AppBar>
+        <AppBar mb={10}>
           <Toolbar>
             <Typography variant="h6">Sauda Tech</Typography>
           </Toolbar>

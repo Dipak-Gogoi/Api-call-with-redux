@@ -2,10 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import axios from 'axios';
 import { setDatas } from '../redux/actions/dataAction';
-import { Container, CircularProgress } from "@material-ui/core";
+import { CircularProgress } from "@material-ui/core";
 import DataComponent from './DataComponent';
+import classes from './DataList.module.css';
 
-const DataList = () => {
+const DataList = (props) => {
     const [isloading, setIsLoading] = useState(false);
     const dispatch = useDispatch();
 
@@ -18,7 +19,7 @@ const DataList = () => {
                 .catch((err) => {
                     console.log('Error', err);
                 });
-            console.log(response.data);
+            // console.log(response.data);
             dispatch(setDatas(response.data));
             setIsLoading(false);
         };
@@ -26,21 +27,23 @@ const DataList = () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    const getChildData = (user) => {
-
+    const getChildData = (data) => {
+        props.emitChildData(data)
     };
 
     const loading = () => {
         if (isloading) {
-            return <CircularProgress />
+            return <div className={classes.loader}>
+                <CircularProgress />
+            </div>
         }
         return <DataComponent emitChildData={getChildData} />
     };
 
     return (
-        <Container>
+        <section className={classes['user-card']}>
             {loading()}
-        </Container>
+        </section>
     )
 }
 
